@@ -1,5 +1,20 @@
+import { existsSync, cp } from 'node:fs'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const copy = async () => {
-    // Write your code here 
+    const source = join(__dirname, 'files')
+    const destination = join(__dirname, 'files_copy')
+
+    if(!existsSync(source) || existsSync(destination)){
+        throw new Error('FS operation failed')
+    }
+
+    const options = { recursive: true }
+    cp(source, destination, options, () => {})
 };
 
 await copy();
